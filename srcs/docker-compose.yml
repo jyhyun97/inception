@@ -8,8 +8,16 @@ services :
       - "443:443"
     networks :
       - inception_net
-    #restart : always
-  
+    restart : always
+
+    mariadb :
+      container_name : mariadb
+      build : requirements/mariadb
+      ports :
+        - "3306:3306"
+      network :
+          - inception_net
+      restart : always
 
 networks :
   inception_net :

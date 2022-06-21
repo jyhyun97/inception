@@ -1,5 +1,7 @@
 FROM debian:buster
 
+EXPOSE 443
+
 RUN apt-get update -y
 RUN apt-get install nginx -y
 RUN apt-get install vim -y
@@ -12,4 +14,4 @@ RUN openssl req -x509 -days 365 -in cert.csr -key cert.key -out cert.crt
 RUN mkdir /etc/nginx/ssl
 RUN mv cert.key /etc/nginx/ssl/
 RUN mv cert.crt /etc/nginx/ssl/
-
+COPY conf/default /etc/nginx/sites-available/default
