@@ -6,19 +6,46 @@ services :
     build : requirements/nginx
     ports :
       - "443:443"
+    volumes :
+      - wp_site:/var/www/wordpress
     networks :
       - inception_net
     restart : always
 
-    mariadb :
-      container_name : mariadb
-      build : requirements/mariadb
-      ports :
-        - "3306:3306"
-      network :
-          - inception_net
-      restart : always
+  mariadb :
+    container_name : mariadb
+    build : requirements/mariadb
+    ports :
+      - "3306:3306"
+    volumes :
+      - wp_db:/var/lib/mysql
+    networks :
+      - inception_net
+    restart : always
+
+  wordpress :
+    container_name : wordpress
+    build : requirements/wordpress
+    ports :
+      - "9000:9000"
+    volumes :
+      - wp_site:/var/www/wordpress
+    networks :
+      - inception_net
+    restart : always
 
 networks :
   inception_net :
     driver : bridge
+
+volumes :
+  wp_db :
+    driver_opts :
+      o : bind
+      type : volume
+      device : /home/jeonhyun/volume/wp_db
+  wp_site :
+    driver_opts :
+      o : bind
+      type : volume
+      device : /home/jeonhyun/volume/wp_site
