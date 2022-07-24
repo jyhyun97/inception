@@ -1,51 +1,59 @@
-version : '3.8'
+version: '3.8'
 
-services :
-  nginx :
-    container_name : nginx
-    build : requirements/nginx
-    ports :
-      - "443:443"
-    volumes :
+services:
+  nginx:
+    container_name: nginx
+    build: requirements/nginx
+    ports:
+      - '443:443'
+    volumes:
       - wp_site:/var/www/wordpress
-    networks :
+    networks:
       - inception_net
-    restart : always
+    restart: always
 
-  mariadb :
-    container_name : mariadb
-    build : requirements/mariadb
-    ports :
-      - "3306:3306"
-    volumes :
+  mariadb:
+    depends_on:
+      - nginx
+    container_name: mariadb
+    build: requirements/mariadb
+    ports:
+      - '3306:3306'
+    volumes:
       - wp_db:/var/lib/mysql
-    networks :
+    networks:
       - inception_net
-    restart : always
+    env_file:
+      - .env
+    restart: always
 
-  wordpress :
-    container_name : wordpress
-    build : requirements/wordpress
-    ports :
-      - "9000:9000"
-    volumes :
+  wordpress:
+    depends_on:
+      - mariadb
+    container_name: wordpress
+    build: requirements/wordpress
+    ports:
+      - '9000:9000'
+    volumes:
       - wp_site:/var/www/wordpress
-    networks :
+    networks:
       - inception_net
-    restart : always
+    env_file:
+      - .env
+    restart: always
 
-networks :
-  inception_net :
-    driver : bridge
+networks:
+  inception_net:
+    driver: bridge
 
-volumes :
-  wp_db :
-    driver_opts :
-      o : bind
-      type : volume
-      device : /home/jeonhyun/volume/wp_db
-  wp_site :
-    driver_opts :
-      o : bind
-      type : volume
-      device : /home/jeonhyun/volume/wp_site
+volumes:
+  wp_db:
+    driver_opts:
+      o: bind
+      type: volume
+      device: /Users/jeonhyun/volume/wp_db
+  wp_site:
+    driver_opts:
+      o: bind
+      type: volume
+      device: /Users/jeonhyun/volume/wp_site

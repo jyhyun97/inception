@@ -15,3 +15,5 @@ RUN mkdir /etc/nginx/ssl
 RUN mv cert.key /etc/nginx/ssl/
 RUN mv cert.crt /etc/nginx/ssl/
 COPY conf/default /etc/nginx/sites-available/default
+
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
