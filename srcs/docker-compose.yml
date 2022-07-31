@@ -3,6 +3,7 @@ version: '3.8'
 services:
   nginx:
     container_name: nginx
+    image: nginx
     build: requirements/nginx
     ports:
       - '443:443'
@@ -13,9 +14,8 @@ services:
     restart: always
 
   mariadb:
-    depends_on:
-      - nginx
     container_name: mariadb
+    image: mariadb
     build: requirements/mariadb
     ports:
       - '3306:3306'
@@ -28,9 +28,8 @@ services:
     restart: always
 
   wordpress:
-    depends_on:
-      - mariadb
     container_name: wordpress
+    image: wordpress
     build: requirements/wordpress
     ports:
       - '9000:9000'
@@ -51,9 +50,9 @@ volumes:
     driver_opts:
       o: bind
       type: volume
-      device: /home/jeonhyun/volume/wp_db
+      device: /home/jeonhyun/data/wp_db
   wp_site:
     driver_opts:
       o: bind
       type: volume
-      device: /home/jeonhyun/volume/wp_site
+      device: /home/jeonhyun/data/wp_site

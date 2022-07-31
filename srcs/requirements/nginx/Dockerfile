@@ -8,7 +8,7 @@ RUN apt-get install vim -y
 RUN apt-get install openssl -y
 
 RUN openssl genrsa -out cert.key 2048
-RUN openssl req -new -key cert.key -out cert.csr -subj "/C=KR/ST=Seoul/L=Gaepo/O=42Seoul/OU=Gam/CN=jeonhyun@student.42seoul.kr"
+RUN openssl req -new -key cert.key -out cert.csr -subj "/C=KR/ST=Seoul/L=Gaepo/O=42Seoul/OU=Gam/CN=jeonhyun.42.fr"
 RUN openssl req -x509 -days 365 -in cert.csr -key cert.key -out cert.crt
 
 RUN mkdir /etc/nginx/ssl
