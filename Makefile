@@ -6,6 +6,7 @@ all :
 	mkdir -p /home/jeonhyun/data
 	mkdir -p /home/jeonhyun/data/wp_db
 	mkdir -p /home/jeonhyun/data/wp_site
+	echo '127.0.0.1 jeonhyun.42.fr' | sudo tee --append /etc/hosts
 	sudo docker-compose -f srcs/docker-compose.yml up
 up :
 	sudo docker-compose -f srcs/docker-compose.yml up
